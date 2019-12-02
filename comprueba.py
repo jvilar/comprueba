@@ -279,9 +279,9 @@ class Comprobador(Procesador):
         return self.entrada
 
     def error_en_salida(self, esperado, encontrado):
-        fin_ok = (encontrado == "" or encontrado[-1] == "\n")
         if len(esperado) == 0 and encontrado == "":
             return False
+        fin_ok = (encontrado == "" or encontrado[-1] == "\n")
         if len(esperado) != 0 and fin_ok:
             s = [c.strip() for c in encontrado.split("\n")]
             s = s[:-1]  # La última línea tiene \n por fin_ok
@@ -477,7 +477,7 @@ def ejecuta_programa(nombre, entrada, salida_esperada, error_esperado):
     ferror = TemporaryFile(mode="w+")
 
     try:
-        programa = Popen(nombre.split(), shell=False, stdin=fentrada, stdout=fsalida, stderr=ferror)
+        programa = Popen(nombre, shell=True, stdin=fentrada, stdout=fsalida, stderr=ferror)
     except OSError as e:
         error("No he podido ejecutar %s, (%s)" % (nombre, e))
 
